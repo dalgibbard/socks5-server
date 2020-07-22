@@ -5,4 +5,5 @@ COPY * /go/
 
 WORKDIR /go/
 RUN GOBIN=$GOPATH/bin go get
-RUN go run server.go
+EXPOSE 1080
+CMD ["go","run","server.go"]
