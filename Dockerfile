@@ -1,11 +1,8 @@
-ARG GOLANG_VERSION="1.12"
+FROM golang:1.12-alpine
+RUN apk add git
+RUN mkdir /go/proxy
+COPY * /go/
 
-FROM golang:$GOLANG_VERSION-alpine as builder
-WORKDIR /go/src/github.com/olebedev/socks5
-COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-s' -o ./socks5
-
-FROM scratch
-COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-COPY --from=builder /go/src/github.com/olebedev/socks5/socks5 /
-ENTRYPOINT ["/socks5"]
+WORKDIR /go/
+RUN GOBIN=$GOPATH/bin go get
+RUN go run server.go

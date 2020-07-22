@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/armon/go-socks5"
+	"github.com/dalgibbard/go-socks5"
 	"github.com/caarlos0/env"
 )
 
